@@ -1,9 +1,9 @@
 overwrite: true
 schema: '../backend/src/typeDefs/schema.graphql'
 documents:
-  - 'graphql/queries/*.graphql'
+  - 'src/graphql/queries/*.graphql'
 generates:
-  graphql/graphqlClientApi.ts:
+  src/graphql/graphqlClientApi.ts:
     plugins:
       - 'typescript'
       - 'typescript-operations'

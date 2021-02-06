@@ -1,8 +1,10 @@
 # frontend
-/frontend/node_modules
 /frontend/.next
-/frontend/yarn-error.log
+/frontend/node_modules
+/frontend/graphql.schema.json
 /frontend/next-env.d.ts
+/frontend/yarn-error.log
+/frontend/src/graphql/graphqlClientApi.ts
 
 # backend
 /backend/dist
