@@ -1,0 +1,17 @@
+overwrite: true
+schema: '../backend/src/typeDefs/schema.graphql'
+documents:
+  - 'graphql/queries/*.graphql'
+generates:
+  graphql/graphqlClientApi.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      withComponent: false
+      withHooks: true
+      withHOC: false
+  ./graphql.schema.json:
+    plugins:
+      - 'introspection'

@@ -6,14 +6,23 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore ."
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore .",
+    "gen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.8",
+    "graphql": "^15.5.0",
     "next": "latest",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.17.8",
+    "@graphql-codegen/introspection": "^1.17.8",
+    "@graphql-codegen/typescript": "^1.17.9",
+    "@graphql-codegen/typescript-operations": "^1.17.8",
+    "@graphql-codegen/typescript-react-apollo": "^2.0.6",
+    "@graphql-codegen/typescript-resolvers": "^1.17.9",
     "@types/node": "^12.12.21",
     "@types/react": "^16.9.16",
     "@types/react-dom": "^16.9.4",
