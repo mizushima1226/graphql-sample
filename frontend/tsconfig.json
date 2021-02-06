@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
+    "paths":{
+      "@hooks/*": ["hooks/*"]
+    },
     "allowJs": true,
     "alwaysStrict": true,
     "esModuleInterop": true,
