@@ -3,3 +3,8 @@
 /frontend/.next
 /frontend/yarn-error.log
 /frontend/next-env.d.ts
+
+# backend
+/backend/dist
+/backend/node_modules
+/backend/yarn-error.log
