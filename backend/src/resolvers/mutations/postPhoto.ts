@@ -1,3 +1,11 @@
+import { photos } from "../../mocks";
+
 export const postPhoto = (parent: any, args: any) => {
-  return {id: 3, ...args.input};
+  const newPhoto = {
+    id: photos.length + 1,
+    ...args.input,
+    createdAt: new Date()
+  };
+  photos.push(newPhoto)
+  return newPhoto;
 }

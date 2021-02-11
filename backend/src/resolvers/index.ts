@@ -1,3 +1,5 @@
+import { GraphQLScalarType, Kind } from "graphql";
+
 import Query from "./queries";
 import Mutation from "./mutations";
 
@@ -26,5 +28,12 @@ export const resolvers = {
         .map(tag => tag.photoID)
         .map(photoID => photos.find(p => p.id === photoID));
     }
-  }
+  },
+  DateTime: new GraphQLScalarType({
+    name: "DateTime",
+    description: "A valid data time value",
+    parseValue: value => new Date(value),
+    serialize: value => new Date(value).toISOString(),
+    parseLiteral: ast => ast.kind === Kind.STRING ? ast.value : null
+  })
 }

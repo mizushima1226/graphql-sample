@@ -18,18 +18,21 @@ export const photos = [
     id: 1,
     name: "Dropping the Heart Chute",
     description: "The heart chute is one of my favorite chutes",
-    githubUser: "gPlake"
+    githubUser: "gPlake",
+    createdAt: "3-28-1977"
   },
   {
     id: 2,
     name: "Enjoying the sunshine",
-    githubUser: "sSchmidt"
+    githubUser: "sSchmidt",
+    createdAt: "1-2-1985"
   },
   {
     id: 3,
     name: "Gunbarrel 25",
     description: "25 laps on gunbarrel today",
-    githubUser: "sSchmidt"
+    githubUser: "sSchmidt",
+    createdAt: "2018-04-15T19:09:57.308Z"
   },
 ];
 

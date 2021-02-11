@@ -1,4 +1,5 @@
 # import * from "enums.graphql"
+# import * from "scalars.graphql"
 
 type Photo {
   id: ID!
@@ -8,6 +9,7 @@ type Photo {
   category: PhotoCategory!
   postedBy: User!
   taggedUsers: [User!]!
+  createdAt: DateTime!
 }
 
 type User {
