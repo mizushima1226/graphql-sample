@@ -31,4 +31,23 @@ export const photos = [
     description: "25 laps on gunbarrel today",
     githubUser: "sSchmidt"
   },
+];
+
+export const tags = [
+  {
+    photoID: 1,
+    userID: "gPlake"
+  },
+  {
+    photoID: 2,
+    userID: "sSchmidt"
+  },
+  {
+    photoID: 1,
+    userID: "mHattrup"
+  },
+  {
+    photoID: 1,
+    userID: "gPlake"
+  },
 ]

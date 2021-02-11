@@ -7,6 +7,7 @@ type Photo {
   description: String
   category: PhotoCategory!
   postedBy: User!
+  taggedUsers: [User!]!
 }
 
 type User {
@@ -16,4 +17,5 @@ type User {
   description: String
   category: PhotoCategory!
   postedPhotos: [Photo!]!
+  inPhotos: [Photo!]!
 }
