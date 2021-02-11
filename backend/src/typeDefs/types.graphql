@@ -6,4 +6,14 @@ type Photo {
   name: String!
   description: String
   category: PhotoCategory!
+  postedBy: User!
+}
+
+type User {
+  id: ID!
+  url: String!
+  name: String!
+  description: String
+  category: PhotoCategory!
+  postedPosts: [Photo!]!
 }
