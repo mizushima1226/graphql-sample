@@ -1,5 +1,5 @@
-import { photos } from "../../mocks";
+import { QueryResolvers } from "../../generated/graphql";
 
-export const totalPhotos = (parent: any, args: any, { db }: any) => {
-  return db.collection('photos').estimatedDocumentCount();
+export const totalPhotos: QueryResolvers["totalPhotos"] = (parent, args, { db }) => {
+  return db.collection('photos').estimatedDocumentCount() as number;
 };

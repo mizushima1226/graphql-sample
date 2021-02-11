@@ -20,7 +20,7 @@ const start = async () => {
   const context = { db }
   const apolloServer = new ApolloServer({
     schema,
-    context
+    context,
   });
 
   const graphqlPath = "/graphql";
@@ -35,17 +35,13 @@ const start = async () => {
     maxAge: 0
   });
   
-  const handler = corsHandler(router(
+  return corsHandler(router(
     get("/", (req: ServerRequest, res: ServerResponse) => "Welcome!"),
     get(graphqlPath, graphqlHandler),
     post(graphqlPath, graphqlHandler),
     options(graphqlPath, (_: ServerRequest, res: ServerResponse) => send(res, 200)),
     (_, res: ServerResponse) => send(res, 404, "Not Found")
   ));
-
-  const server = micro(handler);
-
-  server.listen(4000);
 }
 
-start();
+export default start();

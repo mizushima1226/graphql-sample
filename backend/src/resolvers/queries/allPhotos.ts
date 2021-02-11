@@ -1,5 +1,6 @@
-import { photos } from "../../mocks";
+import { Photo, QueryResolvers } from "../../generated/graphql";
 
-export const allPhotos = (parent: any, args: any) => {
+export const allPhotos: QueryResolvers["allPhotos"] = (parent, args) => {
+  const photos: [Photo] = [{} as Photo];
   return photos;
 }

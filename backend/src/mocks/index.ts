@@ -15,11 +15,13 @@ export const users = [
 
 export const photos = [
   {
-    id: 1,
+    id: "1",
     name: "Dropping the Heart Chute",
     description: "The heart chute is one of my favorite chutes",
     githubUser: "gPlake",
-    createdAt: "3-28-1977"
+    createdAt: "3-28-1977",
+    taggedUsers: [],
+    postedBy: users.find(u => u.githubLogin === "1"),
   },
   {
     id: 2,
