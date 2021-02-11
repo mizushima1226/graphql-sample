@@ -15,5 +15,5 @@ type User {
   name: String!
   description: String
   category: PhotoCategory!
-  postedPosts: [Photo!]!
+  postedPhotos: [Photo!]!
 }

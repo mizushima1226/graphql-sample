@@ -1,1 +1,3 @@
-export const totalPhotos = () => 42;
+import { photos } from "../../mocks";
+
+export const totalPhotos = () => photos.length;
