@@ -2,7 +2,7 @@ import { send } from "micro";
 import cors from "micro-cors";
 import { get, options, post, router, ServerRequest } from "microrouter";
 import { ApolloServer } from "apollo-server-micro";
-import { ServerResponse, Server } from 'http';
+import { ServerResponse } from 'http';
 
 import { schema } from "./schema";
 

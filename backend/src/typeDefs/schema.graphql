@@ -1,5 +1,11 @@
-# import Query from "query.graphql"
+# import * from "types.graphql"
+# import * from "inputs.graphql"
 
-schema {
-  query: Query
+type Query {
+  totalPhotos: Int!
+  allPhotos: [Photo!]!
+}
+
+type Mutation {
+  postPhoto(input: PostPhotoInput!): Photo!
 }

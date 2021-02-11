@@ -1,7 +1,10 @@
-import { movies } from "./movies";
+import Query from "./queries";
+import Mutation from "./mutations";
 
 export const resolvers = {
-  Query: {
-    movies
+  Query,
+  Mutation,
+  Photo: {
+    url: (parent: {}) => `http://mysite.com/img/${1}.jpg`
   }
 }

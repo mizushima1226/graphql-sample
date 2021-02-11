@@ -1,0 +1,9 @@
+# import * from "enums.graphql"
+
+type Photo {
+  id: ID!
+  url: String!
+  name: String!
+  description: String
+  category: PhotoCategory!
+}

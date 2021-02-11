@@ -1,0 +1,7 @@
+# import * from "enums.graphql"
+
+input PostPhotoInput {
+  name: String!
+  category: PhotoCategory = PORTRAIT
+  description: String
+}
