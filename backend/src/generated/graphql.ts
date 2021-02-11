@@ -57,7 +57,13 @@ export enum PhotoCategory {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  githubAuth: AuthPayload;
   postPhoto: Photo;
+};
+
+
+export type MutationGithubAuthArgs = {
+  code: Scalars['String'];
 };
 
 
@@ -69,6 +75,12 @@ export type PostPhotoInput = {
   category: Maybe<PhotoCategory>;
   description: Maybe<Scalars['String']>;
   name: Scalars['String'];
+};
+
+export type AuthPayload = {
+  __typename?: 'AuthPayload';
+  token: Scalars['String'];
+  user: User;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -160,6 +172,7 @@ export type ResolversTypes = ResolversObject<{
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   Mutation: ResolverTypeWrapper<{}>;
   PostPhotoInput: PostPhotoInput;
+  AuthPayload: ResolverTypeWrapper<AuthPayload>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
@@ -174,6 +187,7 @@ export type ResolversParentTypes = ResolversObject<{
   DateTime: Scalars['DateTime'];
   Mutation: {};
   PostPhotoInput: PostPhotoInput;
+  AuthPayload: AuthPayload;
   Boolean: Scalars['Boolean'];
 }>;
 
@@ -213,7 +227,14 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  githubAuth: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationGithubAuthArgs, 'code'>>;
   postPhoto: Resolver<ResolversTypes['Photo'], ParentType, ContextType, RequireFields<MutationPostPhotoArgs, 'input'>>;
+}>;
+
+export type AuthPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthPayload'] = ResolversParentTypes['AuthPayload']> = ResolversObject<{
+  token: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = any> = ResolversObject<{
@@ -222,6 +243,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   User: UserResolvers<ContextType>;
   DateTime: GraphQLScalarType;
   Mutation: MutationResolvers<ContextType>;
+  AuthPayload: AuthPayloadResolvers<ContextType>;
 }>;
 
 
