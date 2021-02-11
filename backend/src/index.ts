@@ -17,10 +17,13 @@ const start = async () => {
   );
   const db = client.db();
 
-  const context = { db }
   const apolloServer = new ApolloServer({
     schema,
-    context,
+    context: async ({req}) => {
+      const githubToken = req.headers?.authorization || "";
+      const currentUser = await db.collection('users').findOne({githubToken});
+      return { db, currentUser };
+    },
   });
 
   const graphqlPath = "/graphql";

@@ -5,6 +5,7 @@ import { totalUsers } from "./totalUsers"
 import { allUsers } from "./allUsers";
 
 const query: QueryResolvers = {
+  me: (_, __, { currentUser  }) => currentUser,
   totalPhotos,
   allPhotos,
   totalUsers,
