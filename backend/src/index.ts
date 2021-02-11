@@ -1,4 +1,4 @@
-import micro, { send } from "micro";
+import { send } from "micro";
 import cors from "micro-cors";
 import { get, options, post, router, ServerRequest } from "microrouter";
 import { ApolloServer } from "apollo-server-micro";
