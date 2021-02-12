@@ -8,6 +8,7 @@ export const useRootInfo = () => {
   const [rootInfo, setRootInfo] = useState<RootInfoQuery | null>(null);
 
   const [getRootInfo, rootInfoQuery] = useRootInfoLazyQuery({
+    fetchPolicy: 'network-only',
     onCompleted: (data) => setRootInfo(data),
     onError: (err) => errorHandling(err),
   });

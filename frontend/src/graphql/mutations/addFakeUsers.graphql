@@ -1,0 +1,7 @@
+mutation addFakeUsers($count: Int = 1) {
+  addFakeUsers(count:$count){
+    githubLogin
+    name
+    avatar
+  }
+}

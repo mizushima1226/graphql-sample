@@ -95,12 +95,59 @@ export type AuthPayload = {
   user: User;
 };
 
+export type AddFakeUsersMutationVariables = Exact<{
+  count?: Maybe<Scalars['Int']>;
+}>;
+
+export type AddFakeUsersMutation = { __typename?: 'Mutation' } & {
+  addFakeUsers: Array<{ __typename?: 'User' } & Pick<User, 'githubLogin' | 'name' | 'avatar'>>;
+};
+
 export type RootInfoQueryVariables = Exact<{ [key: string]: never }>;
 
 export type RootInfoQuery = { __typename?: 'Query' } & Pick<Query, 'totalUsers'> & {
     allUsers: Array<{ __typename?: 'User' } & Pick<User, 'githubLogin' | 'name' | 'avatar'>>;
   };
 
+export const AddFakeUsersDocument = gql`
+  mutation addFakeUsers($count: Int = 1) {
+    addFakeUsers(count: $count) {
+      githubLogin
+      name
+      avatar
+    }
+  }
+`;
+export type AddFakeUsersMutationFn = Apollo.MutationFunction<AddFakeUsersMutation, AddFakeUsersMutationVariables>;
+
+/**
+ * __useAddFakeUsersMutation__
+ *
+ * To run a mutation, you first call `useAddFakeUsersMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddFakeUsersMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addFakeUsersMutation, { data, loading, error }] = useAddFakeUsersMutation({
+ *   variables: {
+ *      count: // value for 'count'
+ *   },
+ * });
+ */
+export function useAddFakeUsersMutation(
+  baseOptions?: Apollo.MutationHookOptions<AddFakeUsersMutation, AddFakeUsersMutationVariables>,
+) {
+  return Apollo.useMutation<AddFakeUsersMutation, AddFakeUsersMutationVariables>(AddFakeUsersDocument, baseOptions);
+}
+export type AddFakeUsersMutationHookResult = ReturnType<typeof useAddFakeUsersMutation>;
+export type AddFakeUsersMutationResult = Apollo.MutationResult<AddFakeUsersMutation>;
+export type AddFakeUsersMutationOptions = Apollo.BaseMutationOptions<
+  AddFakeUsersMutation,
+  AddFakeUsersMutationVariables
+>;
 export const RootInfoDocument = gql`
   query rootInfo {
     totalUsers
