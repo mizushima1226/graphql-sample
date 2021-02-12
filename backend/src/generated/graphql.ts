@@ -48,6 +48,7 @@ export type Photo = {
   postedBy: User;
   taggedUsers: Array<User>;
   url: Scalars['String'];
+  userID: Scalars['String'];
 };
 
 export enum PhotoCategory {
@@ -227,6 +228,7 @@ export type PhotoResolvers<ContextType = any, ParentType extends ResolversParent
   postedBy: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   taggedUsers: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
   url: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  userID: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

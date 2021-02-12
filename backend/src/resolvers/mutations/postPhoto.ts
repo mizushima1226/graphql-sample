@@ -1,12 +1,19 @@
-import { MutationResolvers, Photo, PhotoCategory } from "../../generated/graphql";
-import { photos } from "../../mocks";
+import { MutationResolvers, Photo } from "../../generated/graphql";
 
-export const postPhoto: MutationResolvers["postPhoto"] = (_, args) => {
+export const postPhoto: MutationResolvers["postPhoto"] = async (_, args, { db, currentUser }) => {
+  if(!currentUser) throw new Error('only an authorized user can post a photo');
   const newPhoto: Partial<Photo> = {
-    id: `${photos.length + 1}`,
-    ...args.input,
+    name: args.input.name,
+    description: args.input.description,
+    category: args.input.category!,
     createdAt: new Date(),
-    category: PhotoCategory.Selfie
   };
+  const data: Photo & { userID: string; } = {
+    ...newPhoto as Photo,
+    userID: currentUser.githubLogin
+  };
+  const { insertedIds } = await db.collection('photos') .insert(data);
+  newPhoto.id = insertedIds[0];
+  
   return newPhoto as Photo;
 }

@@ -5,8 +5,10 @@ import { ApolloServer } from "apollo-server-micro";
 import { ServerResponse } from 'http';
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
+import { importSchema } from "graphql-import";
+import { makeExecutableSchema } from "graphql-tools";
 
-import { schema } from "./schema";
+import { resolvers } from "./resolvers";
 
 dotenv.config();
 
@@ -16,6 +18,12 @@ const start = async () => {
     { useNewUrlParser: true }
   );
   const db = client.db();
+
+  const typeDefs = importSchema("src/typeDefs/schema.graphql");
+  const schema = makeExecutableSchema({
+    resolvers,
+    typeDefs
+  });
 
   const apolloServer = new ApolloServer({
     schema,

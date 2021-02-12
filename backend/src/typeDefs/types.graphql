@@ -8,6 +8,7 @@ type Photo {
   description: String
   category: PhotoCategory!
   githubUser: String
+  userID: String!
   postedBy: User!
   taggedUsers: [User!]!
   createdAt: DateTime!
