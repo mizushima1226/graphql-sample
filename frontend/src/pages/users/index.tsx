@@ -1,37 +1,38 @@
-import { GetStaticProps } from 'next';
-import Link from 'next/link';
+import { useReactiveVar } from '@apollo/client';
+import { useEffect } from 'react';
 
-import { User } from '../../interfaces';
-import { sampleUserData } from '../../utils/sample-data';
-import Layout from '../../components/Layout';
-import List from '../../components/List';
+import { useRootInfo } from '../../hooks/useRootInfo';
 
-type Props = {
-  items: User[];
+const Users = () => {
+  const { rootInfo, getRootInfo, rootInfoQuery } = useRootInfo();
+
+  useEffect(() => {
+    getRootInfo();
+  }, []);
+  console.log(rootInfo);
+  const onClickRefetch = () => getRootInfo();
+
+  return (
+    <>
+      <h2>This is Users Page!!</h2>
+      {rootInfoQuery.loading ? (
+        <p>loading...</p>
+      ) : (
+        <>
+          <p> users count : {rootInfo?.totalUsers}</p>
+          <button onClick={onClickRefetch}>Refetch</button>
+          <ul>
+            {rootInfo?.allUsers.map((user) => (
+              <li key={user.githubLogin}>
+                <img src={user.avatar || ''} alt="" width="48" height="48" />
+                {user.name}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </>
+  );
 };
 
-const WithStaticProps = ({ items }: Props) => (
-  <Layout title="Users List | Next.js + TypeScript Example">
-    <h1>Users List</h1>
-    <p>
-      Example fetching data from inside <code>getStaticProps()</code>.
-    </p>
-    <p>You are currently on: /users</p>
-    <List items={items} />
-    <p>
-      <Link href="/">
-        <a>Go home</a>
-      </Link>
-    </p>
-  </Layout>
-);
-
-export const getStaticProps: GetStaticProps = async () => {
-  // Example for including static props in a Next.js function component page.
-  // Don't forget to include the respective types for any props passed into
-  // the component.
-  const items: User[] = sampleUserData;
-  return { props: { items } };
-};
-
-export default WithStaticProps;
+export default Users;

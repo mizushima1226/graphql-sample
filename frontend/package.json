@@ -7,7 +7,7 @@
     "start": "next start",
     "type-check": "tsc",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx",
-    "gen": "graphql-codegen --config codegen.yml && eslint src/graphql/graphqlClientApi.ts  --fix"
+    "gen": "graphql-codegen --config codegen.yml && eslint src/generated/graphql.ts  --fix"
   },
   "dependencies": {
     "@apollo/client": "^3.3.8",
