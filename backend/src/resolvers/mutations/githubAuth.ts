@@ -1,13 +1,13 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { AuthPayload, MutationResolvers } from "../../generated/graphql";
+import { MutationResolvers } from "../../generated/graphql";
 import { authorizeWithGithub } from "../../lib/auth";
 
 export const githubAuth: MutationResolvers["githubAuth"] = async ( _, { code }, { db } ) => {
   const res = await authorizeWithGithub({
-    client_id: process.env.GITHUB_AUTH_CLIENT_ID,
-    client_secret: process.env.GITHUB_AUTH_CLIENT_SECRET,
+    client_id: process.env.CLIENT_ID,
+    client_secret: process.env.CLIENT_SECRET,
     code
   });
 
