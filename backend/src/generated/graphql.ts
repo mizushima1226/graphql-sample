@@ -62,8 +62,14 @@ export enum PhotoCategory {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addFakeUsers: Array<User>;
   githubAuth: AuthPayload;
   postPhoto: Photo;
+};
+
+
+export type MutationAddFakeUsersArgs = {
+  count?: Maybe<Scalars['Int']>;
 };
 
 
@@ -237,6 +243,7 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  addFakeUsers: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationAddFakeUsersArgs, 'count'>>;
   githubAuth: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationGithubAuthArgs, 'code'>>;
   postPhoto: Resolver<ResolversTypes['Photo'], ParentType, ContextType, RequireFields<MutationPostPhotoArgs, 'input'>>;
 }>;
