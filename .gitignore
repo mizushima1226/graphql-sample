@@ -2,6 +2,7 @@
 /frontend/.next
 /frontend/node_modules
 /frontend/graphql.schema.json
+/frontend/.env.local
 /frontend/next-env.d.ts
 /frontend/yarn-error.log
 /frontend/src/graphql/graphqlClientApi.ts
