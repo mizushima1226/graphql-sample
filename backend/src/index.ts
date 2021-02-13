@@ -2,7 +2,7 @@ import { send } from "micro";
 import cors from "micro-cors";
 import { get, options, post, router, ServerRequest } from "microrouter";
 import { ApolloServer } from "apollo-server-micro";
-import { ServerResponse } from 'http';
+import { createServer, ServerResponse } from 'http';
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 import { importSchema } from "graphql-import";
@@ -37,6 +37,13 @@ const start = async () => {
   const graphqlPath = "/graphql";
   const graphqlHandler = apolloServer.createHandler({
     path: graphqlPath,
+  });
+
+  const httpServer = createServer();
+  apolloServer.installSubscriptionHandlers(httpServer);
+
+  httpServer.listen({port: process.env.WS_PORT}, () => {
+    console.log(`GraphQL Server running at localhost:5000${apolloServer.graphqlPath}`);
   });
   
   const corsHandler = cors({
