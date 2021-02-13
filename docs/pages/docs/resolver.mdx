@@ -1,0 +1,30 @@
+# リゾルバー
+
+- バックエンドエンジニアがリゾルバーを実装するよ！
+- クエリやミューテーションなどのリクエストを「解決」してくれるよ！
+- こんな感じで書くよ↓(typescript)
+```typescript
+const resolver = {
+  Query: {
+    allPhotos: () => {
+      const photos = mock.getPhotos();
+      return photos;
+    },
+    allUsers: () => {
+      const users = mock.getUsers();
+      return users;
+    }
+  },
+  Mutation: {
+    phostPhoto: (_, args) => {
+      const photo = {
+        id: `honobono_${new Date().toString()}`,
+        name: args.name,
+        description: args.description
+      };
+      mock.addPhoto(photo);
+      return photo;
+    }
+  }
+}
+```

@@ -4,5 +4,6 @@
   "query": "Query",
   "mutation": "Mutation",
   "subscription": "Subscription",
+  "resolver": "Resolver",
   "advanced": "Advanced"
 }
