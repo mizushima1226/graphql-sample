@@ -100,6 +100,11 @@ export type AuthPayload = {
   user: User;
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  newPhoto: Photo;
+};
+
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
 
@@ -190,6 +195,7 @@ export type ResolversTypes = ResolversObject<{
   Mutation: ResolverTypeWrapper<{}>;
   PostPhotoInput: PostPhotoInput;
   AuthPayload: ResolverTypeWrapper<AuthPayload>;
+  Subscription: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
@@ -205,6 +211,7 @@ export type ResolversParentTypes = ResolversObject<{
   Mutation: {};
   PostPhotoInput: PostPhotoInput;
   AuthPayload: AuthPayload;
+  Subscription: {};
   Boolean: Scalars['Boolean'];
 }>;
 
@@ -261,6 +268,10 @@ export type AuthPayloadResolvers<ContextType = any, ParentType extends Resolvers
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
+  newPhoto: SubscriptionResolver<ResolversTypes['Photo'], "newPhoto", ParentType, ContextType>;
+}>;
+
 export type Resolvers<ContextType = any> = ResolversObject<{
   Query: QueryResolvers<ContextType>;
   User: UserResolvers<ContextType>;
@@ -268,6 +279,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   DateTime: GraphQLScalarType;
   Mutation: MutationResolvers<ContextType>;
   AuthPayload: AuthPayloadResolvers<ContextType>;
+  Subscription: SubscriptionResolvers<ContextType>;
 }>;
 
 

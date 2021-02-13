@@ -2,6 +2,7 @@ import { send } from "micro";
 import cors from "micro-cors";
 import { get, options, post, router, ServerRequest } from "microrouter";
 import { ApolloServer } from "apollo-server-micro";
+import { PubSub } from "apollo-server";
 import { createServer, ServerResponse } from 'http';
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
@@ -24,17 +25,24 @@ const start = async () => {
     resolvers,
     typeDefs
   });
+  const pubsub = new PubSub();
+  const graphqlPath = "/graphql";
 
   const apolloServer = new ApolloServer({
     schema,
-    context: async ({req}) => {
-      const githubToken = req.headers?.authorization || "";
+    playground: {
+      subscriptionEndpoint: `ws://localhost:${process.env.WS_PORT}${graphqlPath}`
+    },
+    context: async ({ req, connection}) => {
+      const githubToken = req ? 
+        req.headers.authorization || "" :
+        connection.context.Authorization;
       const currentUser = await db.collection('users').findOne({githubToken});
-      return { db, currentUser };
+      
+      return { db, currentUser, pubsub };
     },
   });
 
-  const graphqlPath = "/graphql";
   const graphqlHandler = apolloServer.createHandler({
     path: graphqlPath,
   });

@@ -2,12 +2,14 @@ import { GraphQLScalarType, Kind } from "graphql";
 
 import Query from "./queries";
 import Mutation from "./mutations";
+import Subscription from "./subscriptions";
 import Photo from "./types/photo";
 import User from "./types/user";
 
 export const resolvers = {
   Query,
   Mutation,
+  Subscription,
   Photo,
   User,
   DateTime: new GraphQLScalarType({
