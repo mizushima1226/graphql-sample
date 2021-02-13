@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useApolloClient } from '@apollo/client';
 
+import Layout from '../../components/Layout';
 import { RootInfoDocument, RootInfoQuery } from '../../generated/graphql';
 import { useRootInfo } from '../../hooks/useRootInfo';
 import { useUser } from '../../hooks/useUser';
@@ -21,14 +22,14 @@ const Users = () => {
     const data = { ...temp };
     data.totalUsers += fakeUsers.length;
     data.allUsers = [...data.allUsers, ...fakeUsers];
-    client.cache.writeQuery({ query: RootInfoDocument, data });
+    // client.cache.writeQuery({ query: RootInfoDocument, data });
   }, [fakeUsers]);
 
   const onClickRefetch = () => getRootInfo();
   const onClickAddFakeUsers = () => addFakeUsers({ variables: { count: 1 } });
 
   return (
-    <>
+    <Layout>
       <h2>This is Users Page!!</h2>
       <button onClick={onClickAddFakeUsers}>Add Fake Users</button>
       {addFakeUsersMatation.loading ? (
@@ -64,7 +65,7 @@ const Users = () => {
           </ul>
         </>
       )}
-    </>
+    </Layout>
   );
 };
 

@@ -103,6 +103,7 @@ export type AuthPayload = {
 export type Subscription = {
   __typename?: 'Subscription';
   newPhoto: Photo;
+  newUser: User;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -270,6 +271,7 @@ export type AuthPayloadResolvers<ContextType = any, ParentType extends Resolvers
 
 export type SubscriptionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Subscription'] = ResolversParentTypes['Subscription']> = ResolversObject<{
   newPhoto: SubscriptionResolver<ResolversTypes['Photo'], "newPhoto", ParentType, ContextType>;
+  newUser: SubscriptionResolver<ResolversTypes['User'], "newUser", ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = any> = ResolversObject<{

@@ -95,6 +95,12 @@ export type AuthPayload = {
   user: User;
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  newPhoto: Photo;
+  newUser: User;
+};
+
 export type UserInfoFragment = { __typename?: 'User' } & Pick<User, 'githubLogin' | 'name' | 'avatar'>;
 
 export type AddFakeUsersMutationVariables = Exact<{
@@ -119,6 +125,12 @@ export type RootInfoQuery = { __typename?: 'Query' } & Pick<Query, 'totalUsers'>
     allUsers: Array<{ __typename?: 'User' } & UserInfoFragment>;
     me?: Maybe<{ __typename?: 'User' } & UserInfoFragment>;
   };
+
+export type ListenForUserSubscriptionVariables = Exact<{ [key: string]: never }>;
+
+export type ListenForUserSubscription = { __typename?: 'Subscription' } & {
+  newUser: { __typename?: 'User' } & UserInfoFragment;
+};
 
 export const UserInfoFragmentDoc = gql`
   fragment userInfo on User {
@@ -237,3 +249,37 @@ export function useRootInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<R
 export type RootInfoQueryHookResult = ReturnType<typeof useRootInfoQuery>;
 export type RootInfoLazyQueryHookResult = ReturnType<typeof useRootInfoLazyQuery>;
 export type RootInfoQueryResult = Apollo.QueryResult<RootInfoQuery, RootInfoQueryVariables>;
+export const ListenForUserDocument = gql`
+  subscription listenForUser {
+    newUser {
+      ...userInfo
+    }
+  }
+  ${UserInfoFragmentDoc}
+`;
+
+/**
+ * __useListenForUserSubscription__
+ *
+ * To run a query within a React component, call `useListenForUserSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useListenForUserSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListenForUserSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListenForUserSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<ListenForUserSubscription, ListenForUserSubscriptionVariables>,
+) {
+  return Apollo.useSubscription<ListenForUserSubscription, ListenForUserSubscriptionVariables>(
+    ListenForUserDocument,
+    baseOptions,
+  );
+}
+export type ListenForUserSubscriptionHookResult = ReturnType<typeof useListenForUserSubscription>;
+export type ListenForUserSubscriptionResult = Apollo.SubscriptionResult<ListenForUserSubscription>;

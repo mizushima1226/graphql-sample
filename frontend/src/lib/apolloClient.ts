@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
-import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, NormalizedCacheObject, split } from '@apollo/client';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from 'apollo-utilities';
 import { persistCache, LocalStorageWrapper } from 'apollo3-cache-persist';
 
 import { getItem } from '../utils/localStrageUtil';
@@ -7,11 +9,15 @@ import { getItem } from '../utils/localStrageUtil';
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 const createApolloClient = () => {
-  const isClientSide = typeof window !== 'undefined';
+  const wsLink = process.browser
+    ? new WebSocketLink({
+        uri: `ws://localhost:5000/graphql`,
+        options: { reconnect: true },
+      })
+    : undefined;
   const httpLink = new HttpLink({
     uri: process.env.NEXT_PUBLIC_GRAPHQL_API,
   });
-
   const authLink = new ApolloLink((operation, forward) => {
     const token = getItem('token');
     operation.setContext({
@@ -21,9 +27,18 @@ const createApolloClient = () => {
     });
     return forward(operation);
   });
+  const httpAuthLink = authLink.concat(httpLink);
+  const link = split(
+    ({ query }) => {
+      const def = getMainDefinition(query);
+      return def.kind === 'OperationDefinition' && def.operation !== 'subscription';
+    },
+    httpAuthLink,
+    wsLink,
+  );
 
   const cache = new InMemoryCache();
-  if (isClientSide) {
+  if (process.browser) {
     persistCache({
       cache,
       storage: new LocalStorageWrapper(window.localStorage),
@@ -39,8 +54,8 @@ const createApolloClient = () => {
     headers: {
       authorization: getItem('token'),
     },
-    ssrMode: !isClientSide,
-    link: authLink.concat(httpLink),
+    ssrMode: !process.browser,
+    link: link,
     cache: new InMemoryCache(),
   });
 };

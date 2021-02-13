@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 import { MutationResolvers, User, Photo } from "../../generated/graphql";
 
-export const addFakeUsers: MutationResolvers["addFakeUsers"] = async (_, { count }, { db }) => {
+export const addFakeUsers: MutationResolvers["addFakeUsers"] = async (_, { count }, { db, pubsub }) => {
   const { results } = await fetch(
     `https://randomuser.me/api/?results=${count}`
   ).then(res => res.json());
@@ -15,6 +15,8 @@ export const addFakeUsers: MutationResolvers["addFakeUsers"] = async (_, { count
       githubToken: r.login.sha1,
     };
   });
+
+  pubsub.publish('user-added', { newUser: users[0] });
 
   await db.collection('users').insert(users);
 
