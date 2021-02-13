@@ -3,5 +3,6 @@
   "schema-first": "Schema First",
   "query": "Query",
   "mutation": "Mutation",
+  "subscription": "Subscription",
   "advanced": "Advanced"
 }
