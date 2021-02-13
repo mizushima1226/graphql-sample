@@ -1,4 +1,4 @@
-type Key = 'token';
+type Key = 'token' | 'apollo-cache-persist';
 
 const isClientSide = typeof window !== 'undefined';
 
