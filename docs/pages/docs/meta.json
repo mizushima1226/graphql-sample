@@ -5,5 +5,5 @@
   "mutation": "Mutation",
   "subscription": "Subscription",
   "resolver": "Resolver",
-  "advanced": "Advanced"
+  "sample": "Sample"
 }
