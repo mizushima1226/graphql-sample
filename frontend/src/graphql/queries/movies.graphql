@@ -1,6 +1,0 @@
-query movies {
-  movies {
-    title
-    director
-  }
-}

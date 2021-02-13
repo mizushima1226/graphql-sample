@@ -1,0 +1,7 @@
+# import userInfo from "../fragments/userInfo.graphql"
+
+query rootInfo {
+  totalUsers
+  allUsers { ...userInfo }
+  me { ...userInfo }
+}

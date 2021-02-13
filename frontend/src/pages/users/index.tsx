@@ -1,37 +1,71 @@
-import { GetStaticProps } from 'next';
-import Link from 'next/link';
+import { useEffect } from 'react';
+import { useApolloClient } from '@apollo/client';
 
-import { User } from '../../interfaces';
-import { sampleUserData } from '../../utils/sample-data';
-import Layout from '../../components/Layout';
-import List from '../../components/List';
+import { RootInfoDocument, RootInfoQuery } from '../../generated/graphql';
+import { useRootInfo } from '../../hooks/useRootInfo';
+import { useUser } from '../../hooks/useUser';
 
-type Props = {
-  items: User[];
+const Users = () => {
+  const client = useApolloClient();
+  const { rootInfo, getRootInfo, rootInfoQuery } = useRootInfo();
+  const { fakeUsers, addFakeUsers, addFakeUsersMatation } = useUser();
+
+  useEffect(() => {
+    getRootInfo();
+  }, []);
+  // フェイクユーザー追加後apolloのキャッシュを変更
+  useEffect(() => {
+    if (!fakeUsers || fakeUsers.length === 0) return;
+    const temp = client.cache.readQuery<RootInfoQuery>({ query: RootInfoDocument });
+    if (!temp) return;
+    const data = { ...temp };
+    data.totalUsers += fakeUsers.length;
+    data.allUsers = [...data.allUsers, ...fakeUsers];
+    client.cache.writeQuery({ query: RootInfoDocument, data });
+  }, [fakeUsers]);
+
+  const onClickRefetch = () => getRootInfo();
+  const onClickAddFakeUsers = () => addFakeUsers({ variables: { count: 1 } });
+
+  return (
+    <>
+      <h2>This is Users Page!!</h2>
+      <button onClick={onClickAddFakeUsers}>Add Fake Users</button>
+      {addFakeUsersMatation.loading ? (
+        <p>フェイクユーザー登録中・・・</p>
+      ) : fakeUsers && fakeUsers.length > 0 ? (
+        <>
+          <p>ユーザーを登録しました</p>
+          <ul>
+            {fakeUsers?.map((user) => (
+              <li key={user.githubLogin}>
+                <img src={user.avatar || ''} alt="" />
+                {user.name}
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : null}
+      <hr />
+      {rootInfoQuery.loading ? (
+        <p>loading...</p>
+      ) : (
+        <>
+          <p> users count : {rootInfo?.totalUsers}</p>
+
+          <button onClick={onClickRefetch}>Refetch</button>
+          <ul>
+            {rootInfo?.allUsers.map((user) => (
+              <li key={user.githubLogin}>
+                <img src={user.avatar || ''} alt="" width="48" height="48" />
+                {user.name}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </>
+  );
 };
 
-const WithStaticProps = ({ items }: Props) => (
-  <Layout title="Users List | Next.js + TypeScript Example">
-    <h1>Users List</h1>
-    <p>
-      Example fetching data from inside <code>getStaticProps()</code>.
-    </p>
-    <p>You are currently on: /users</p>
-    <List items={items} />
-    <p>
-      <Link href="/">
-        <a>Go home</a>
-      </Link>
-    </p>
-  </Layout>
-);
-
-export const getStaticProps: GetStaticProps = async () => {
-  // Example for including static props in a Next.js function component page.
-  // Don't forget to include the respective types for any props passed into
-  // the component.
-  const items: User[] = sampleUserData;
-  return { props: { items } };
-};
-
-export default WithStaticProps;
+export default Users;
