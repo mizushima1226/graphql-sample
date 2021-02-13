@@ -1,14 +1,30 @@
 import { useMemo } from 'react';
-import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
+
+import { getItem } from '../utils/localStrageUtil';
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
+const httpLink = new HttpLink({
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_API,
+});
+
+const authLink = new ApolloLink((operation, forward) => {
+  const token = getItem('token');
+  operation.setContext({
+    headers: {
+      authorization: token,
+    },
+  });
+  return forward(operation);
+});
 
 const createApolloClient = () => {
   return new ApolloClient({
+    headers: {
+      authorization: getItem('token'),
+    },
     ssrMode: typeof window === 'undefined',
-    link: new HttpLink({
-      uri: 'http://localhost:3000/graphql',
-    }),
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
 };
