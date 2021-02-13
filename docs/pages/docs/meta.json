@@ -2,5 +2,6 @@
   "graph-theory": "Graph Theory",
   "schema-first": "Schema First",
   "query": "Query",
+  "mutation": "Mutation",
   "advanced": "Advanced"
 }

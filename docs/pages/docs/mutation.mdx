@@ -1,0 +1,23 @@
+# ミューテーション
+
+- データを読み込むクエリに対して、ミューテーションはデータの書き込みをするよ！
+- こんな感じでミューテーションを書くよ↓
+```graphql
+mutation postPhoto($name: String!,$ description: String) {
+  postPhoto(name: $name, description: $description){
+    id
+    name
+    description
+  }
+}
+```
+- こんな感じのデータが返ってくるよ↓
+```js
+{
+  "data": {
+    "id": "honobono1",
+    "name": "今日はほのぼの会の日",
+    "description": "おやつを食べてばかりでした"
+  }
+}
+```
