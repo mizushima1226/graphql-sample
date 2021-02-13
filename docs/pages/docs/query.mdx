@@ -1,0 +1,36 @@
+# Queryについて
+
+- GraphQLの問い合わせ言語を使ってデータを取得してみよう！
+- こんな感じでクエリを書くよ↓
+```graphql
+query allUsers {
+  allUsers {
+    name
+    description
+    avatar
+  }
+}
+```
+- こんな感じのレスポンスが返ってくるよ↓
+```js
+{
+  "data" {
+    "allUsers": [
+      {
+        "name": "mizu",
+        "description": "ほのぼの会",
+        "avatar": "https://avatar.com/mizu"
+      },
+      {
+        "name": "hoge",
+        "description": "",
+        "avatar": ""
+      }
+    ]
+  }
+}
+
+```
+- 実際に試してみよう↓
+  1. [スターウォーズAPI](https://graphql.org/swapi-graphql)
+  2. [GitHubAPI](https://docs.github.com/en/graphql/overview/explorer)
