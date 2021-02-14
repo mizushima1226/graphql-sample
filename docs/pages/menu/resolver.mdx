@@ -1,7 +1,7 @@
 # リゾルバー
 
 - バックエンドエンジニアがリゾルバーを実装するよ！
-- クエリやミューテーションなどのリクエストを「解決」してくれるよ！
+- クエリやミューテーション・サブスクリプションなどのリクエストを<span class="font-bold text-danger">「解決」</span>してくれるよ！
 - こんな感じで書くよ↓(typescript)
 ```typescript
 const resolver = {
@@ -16,14 +16,24 @@ const resolver = {
     }
   },
   Mutation: {
-    phostPhoto: (_, args) => {
-      const photo = {
+    phostPhoto: (_, args, context) => {
+      const newPhoto = {
         id: `honobono_${new Date().toString()}`,
         name: args.name,
         description: args.description
       };
-      mock.addPhoto(photo);
-      return photo;
+      mock.addPhoto(newPhoto);
+
+      context.pubsub.publish("photo-added", { newPhoto });
+
+      return newPhoto;
+    }
+  }.
+  Subscription: {
+    newUser: {
+      subscribe: (parent, args, context) => {
+        return context.pubsub.asyncIterator("photo-added");
+      }
     }
   }
 }
