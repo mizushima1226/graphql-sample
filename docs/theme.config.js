@@ -1,11 +1,11 @@
 export default {
   repository: 'https://github.com/shuding/nextra',
-  titleSuffix: ' – Nextra',
+  titleSuffix: ' – Honobono',
   logo: (
     <>
-      <span className="mr-2 font-extrabold hidden md:inline">Nextra</span>
+      <span className="mr-2 font-extrabold hidden md:inline">GraphQLのススメ</span>
       <span className="text-gray-600 font-normal hidden md:inline">
-        The Next Site Builder
+        @ ほのぼの会
       </span>
     </>
   ),
@@ -37,5 +37,5 @@ export default {
   nextLinks: true,
   footer: true,
   footerEditOnGitHubLink: true,
-  footerText: <>MIT {new Date().getFullYear()} © Nextra.</>
+  footerText: <>MIT {new Date().getFullYear()} © ほのぼの会</>
 }

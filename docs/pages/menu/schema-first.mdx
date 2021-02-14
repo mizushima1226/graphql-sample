@@ -4,7 +4,7 @@
 - 開発チームのメンバー全員がデータ型について共通の理解をもつ
 - フロントエンドはスキーマを元にデータの「問い合わせ」・「登録/更新/削除」を行う<br />
 「問い合わせ」→Query　「登録/更新/削除」→Mutation
-- バックエンドはスキーマ定義されたQuery/Mutationを解決する
+- バックエンドはスキーマで定義されたQuery/Mutationを解決する
 - スキーマはこんな感じ↓
 ```graphql
 type User {
@@ -32,5 +32,9 @@ type Mutation {
   postPhoto(name: String!, description: String): Photo!
   editPhoto(id: ID!, name: String!, description: String): Photo!
   deletePhoto(id: ID!): Boolean!
+}
+
+type Subscription {
+  newUser: User!
 }
 ```
