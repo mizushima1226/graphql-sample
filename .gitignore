@@ -12,3 +12,8 @@
 /backend/node_modules
 /backend/.env
 /backend/yarn-error.log
+/backend/.env
+
+# docs
+/docs/.next
+/docs/node_modules

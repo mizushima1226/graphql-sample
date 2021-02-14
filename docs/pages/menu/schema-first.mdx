@@ -1,0 +1,40 @@
+# スキーマファースト
+
+- スキーマ　＝　データ型の集合
+- 開発チームのメンバー全員がデータ型について共通の理解をもつ
+- フロントエンドはスキーマを元にデータの「問い合わせ」・「登録/更新/削除」を行う<br />
+「問い合わせ」→Query　「登録/更新/削除」→Mutation
+- バックエンドはスキーマで定義されたQuery/Mutationを解決する
+- スキーマはこんな感じ↓
+```graphql
+type User {
+  id: ID!
+  name: String!
+  age: Int
+  avatar: String
+}
+
+type Photo {
+  id: ID!
+  title: String!
+  description: String
+  createdAt: DateTime
+}
+
+type Query {
+  allUsers: [User!]!
+  allPhotos: [Photo!]!
+  user(id: String!): User
+  photo(id: String!): Photo
+}
+
+type Mutation {
+  postPhoto(name: String!, description: String): Photo!
+  editPhoto(id: ID!, name: String!, description: String): Photo!
+  deletePhoto(id: ID!): Boolean!
+}
+
+type Subscription {
+  newUser: User!
+}
+```

@@ -7,18 +7,20 @@
     "start": "next start",
     "type-check": "tsc",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx",
-    "gen": "graphql-codegen --config codegen.yml && eslint src/graphql/graphqlClientApi.ts  --fix"
+    "gen": "graphql-codegen --config codegen.yml && eslint src/generated/graphql.ts  --fix"
   },
   "dependencies": {
     "@apollo/client": "^3.3.8",
     "@apollo/react-common": "^3.1.4",
     "@apollo/react-hooks": "^4.0.0",
-    "apollo-boost": "^0.4.9",
-    "react-apollo": "^3.1.5",
+    "apollo-utilities": "^1.3.4",
+    "apollo3-cache-persist": "^0.9.1",
     "graphql": "^15.5.0",
     "next": "latest",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-apollo": "^3.1.5",
+    "react-dom": "^16.12.0",
+    "subscriptions-transport-ws": "^0.9.18"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.17.8",

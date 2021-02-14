@@ -1,5 +1,0 @@
-# import Movie from "movie.graphql"
-
-type Query {
-  movies: [Movie!]!
-}

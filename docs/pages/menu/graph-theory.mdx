@@ -1,0 +1,23 @@
+import Image from 'next/image';
+
+# グラフ理論
+
+- ここにユーザーがおります
+<div><Image src="/draws/usecases/user.dio.svg" width="80" height="150" alt="user" /></div>
+
+- ユーザーは「写真共有アプリ」で写真を投稿します
+<div><Image src="/draws/usecases/user-posts-photo.dio.svg" width="350" height="150" alt="user shares photo" /></div>
+  - このとき、ユーザーと写真の関係は１対１になります
+  <div><Image src="/draws/graphs/one-to-one.dio.svg" width="350" height="150" alt="one-to-many" /></div>
+
+- ユーザーは何枚もの写真を投稿できます
+<div><Image src="/draws/usecases/user-posts-some-photos.dio.svg" width="350" height="300" alt="user shares some photos" /></div>
+  - このとき、ユーザーと写真の関係は１対多になります
+  <div><Image src="/draws/graphs/one-to-many.dio.svg" width="350" height="300" alt="user shares some photos" /></div>
+
+- ユーザーは投稿した写真に複数の他のユーザーをタグ付けできます
+<div><Image src="/draws/usecases/post-is-tagged-by-user.dio.svg" width="350" height="400" alt="user shares some photos" /></div>
+  - このとき、写真とユーザーは１対多の関係になります
+  - １対多の関係が相互に築けたので、ユーザーと写真の関係は多対多になります
+  <div><Image src="/draws/graphs/many-to-many.dio.svg" width="350" height="300" alt="user shares some photos" /></div>
+  

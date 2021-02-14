@@ -1,0 +1,52 @@
+# 問題
+<hr />
+### 馴染みのあるREST APIが抱える問題について
+
+- REST APIはこんな感じ↓
+
+|No|HTTPメソッド|URL|説明|
+|--|--|--|--|
+|1|GET|/api/movies|映画の一覧情報を取得|
+|2|GET|/api/movies/1|id:1の映画情報を取得|
+|3|POST|/api/movies|映画情報を新規登録|
+|4|PUT|/api/movies/1|id:1の映画情報を更新|
+|5|DELETE|/api/movies/1|id:1の映画情報を削除|
+
+AmazonPrimeVideoみたいなアプリをREST APIで作るならこんなリソースが考えられる↓
+1. 映画：`/api/movies`
+2. 俳優：`/api/actors`
+3. ユーザー：`/api/users`
+
+<span className="text-danger font-bold border-bottom">エンドポイントだらけになってドキュメント管理やら何やら大変🤮</span>
+
+<hr />
+
+#### 過剰にデータ取得しちゃう件について
+`/api/actors/1`にリクエストしてみるとこんなレスポンスが返ってくる↓
+```js
+{
+  "name": "ジェイソン・ステイサム",
+  "birthDay": "1967/07/26",
+  "description": "名前がJSONみたいでおもしろいな。",
+  "moviesId": [2,5,15,53,746],
+  // その他色々な情報
+}
+```
+<span className="text-danger font-bold">本当は「名前」「説明」だけ欲しかったのに出演してる映画のIDとかその他諸々データ取得しちゃってる🌀</span>
+
+<hr />
+
+#### 過小なデータ取得で何回もリクエストしなくちゃいけない件について
+ユーザー「ジェイソン・ステイサムが出演してる映画の一覧がみたい！！」ってなったとき<br />
+1. `/api/actors/2`へリクエスト
+2. `moviesId:[2,5,15,53,746]`を取得する
+3. `/api/movies/2`にリクエスト
+4. `/api/movies/5`にリクエスト
+5. `/api/movies/15`にリクエスト
+6. `/api/movies/53`にリクエスト
+7. `/api/movies/746`にリクエスト
+
+<span className="text-danger font-bold">こんな感じで何回もリクエストしちゃう😭</span>
+memo:１回のリクエストで必要な情報を全て返すようなAPIを新しく作る場合は、最初の「エンドポイント大量発生問題」になる
+
+<span className="font-bold" style={{fontSize: '35px', color: '#E00297'}}>GraphQLはこれらの問題を解決してくれる！！</span>

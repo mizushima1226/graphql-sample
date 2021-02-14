@@ -1,0 +1,32 @@
+# サブスクリプション
+
+- WebSocketを使って特定のデータを<span class="text-danger font-bold">「購読」</span>できるよ！
+- こんな感じでサブスクリプションを書くよ↓
+
+```graphql
+subscription listenForPhoto {
+  newPhoto {
+    name
+    description
+    postedBy{
+      name
+      description
+      avatar
+    }
+  }
+}
+```
+- WebSocketでGraphQLサーバーから通知を受け取ったときこんな感じのデータを取得できるよ↓
+```js
+{
+  "data": {
+    "name": "今日はほのぼの会の日",
+    "description": "おやつを食べてばかりでした",
+    "postedBy": {
+      "name": "mizu",
+      "description": "",
+      "avatar": "https://honohono.co.jp/images/avatars/mizushima1226"
+    }
+  }
+}
+```

@@ -1,5 +1,20 @@
-# import Query from "query.graphql"
+# import * from "types.graphql"
+# import * from "inputs.graphql"
 
-schema {
-  query: Query
+type Query {
+  me: User
+  totalPhotos: Int!
+  allPhotos: [Photo!]!
+  totalUsers: Int!
+  allUsers: [User!]!
+}
+type Mutation {
+  postPhoto(input: PostPhotoInput!): Photo!
+  githubAuth(code: String!): AuthPayload!
+  addFakeUsers(count: Int = 1): [User!]!
+  fakeUserAuth(githubLogin: ID!): AuthPayload!
+}
+type Subscription {
+  newPhoto: Photo!
+  newUser: User!
 }
